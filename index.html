@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Thiền Niệm - 7 Ngọn Núi & Suối Thanh Lọc</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Cinzel Decorative & Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Cinzel:wght@500;700;900&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            100: '#FFF7D6',
+                            300: '#FFE082',
+                            400: '#FFD54F',
+                            500: '#FFC107',
+                            600: '#FFB300',
+                            700: '#FFA000',
+                            800: '#FF8F00',
+                        },
+                        amber: {
+                            950: '#1a0c02',
+                        }
+                    },
+                    fontFamily: {
+                        cinzel: ['Cinzel', 'serif'],
+                        charm: ['Charm', 'cursive'],
+                        sans: ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 10, 5, 0.6);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d4af37;
+            border-radius: 3px;
+        }
+
+        /* Gold metallic text effect */
+        .gold-text-glow {
+            background: linear-gradient(135deg, #FFF7D6 0%, #FFD54F 40%, #D4AF37 70%, #AA7C11 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 12px rgba(255, 213, 79, 0.4);
+        }
+
+        .gold-border {
+            border-image: linear-gradient(to bottom, #ffe082, #b38728, #fbf5b7, #aa7c11) 1;
+        }
+
+        /* Redesigned Minimal Vertical Stele Button without background boxes */
+        .stele-btn {
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            backdrop-filter: none;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.95));
+        }
+
+        .stele-btn:hover {
+            transform: translateY(-50%) scale(1.12);
+            filter: drop-shadow(0 0 15px rgba(255, 213, 79, 0.9));
+        }
+
+        /* Pulse animation for Mokugyo ripple */
+        @keyframes ripple {
+            0% {
+                transform: scale(0.8);
+                opacity: 0.9;
+            }
+            100% {
+                transform: scale(2.2);
+                opacity: 0;
+            }
+        }
+        .animate-ripple {
+            animation: ripple 0.7s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+        }
+
+        /* Floating text animation for +1 Công Đức */
+        @keyframes floatUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-35px) scale(1.15);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-70px) scale(0.9);
+            }
+        }
+        .float-merit {
+            animation: floatUp 1.2s ease-out forwards;
+            pointer-events: none;
+        }
+
+        /* Canvas Background Container */
+        #viewport-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            background-color: #0b0704;
+        }
+
+        /* Modal backdrop glassmorphism */
+        .glass-modal {
+            background: rgba(18, 13, 8, 0.88);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+        }
+
+        /* Mist/Fog Animation */
+        @keyframes mistMove {
+            0% { transform: translateX(-10%); }
+            50% { transform: translateX(10%); }
+            100% { transform: translateX(-10%); }
+        }
+        .mist-layer {
+            background: radial-gradient(ellipse at center, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 70%);
+            animation: mistMove 25s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-amber-950 text-amber-100 font-sans select-none overflow-hidden h-screen w-screen">
+
+    <!-- MAIN INTERACTIVE VIEWPORT -->
+    <div id="viewport-container" class="relative w-full h-full flex items-center justify-center">
+
+        <!-- Background Artwork Layer (Generated via SVG/Canvas fallback) -->
+        <div id="bg-artwork" class="absolute inset-0 w-full h-full bg-cover bg-center transition-all duration-700">
+            <!-- Dynamic SVG Scenic Backdrop fallback if no custom URL provided -->
+            <svg id="default-backdrop" class="w-full h-full object-cover" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
+                <defs>
+                    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#2d190e"/>
+                        <stop offset="40%" stop-color="#4a2e1b"/>
+                        <stop offset="75%" stop-color="#8c5828"/>
+                        <stop offset="100%" stop-color="#e8a855"/>
+                    </linearGradient>
+                    <linearGradient id="mountainGrad1" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#1c140e"/>
+                        <stop offset="100%" stop-color="#080503"/>
+                    </linearGradient>
+                    <linearGradient id="mountainGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#3a2717"/>
+                        <stop offset="100%" stop-color="#140c06"/>
+                    </linearGradient>
+                    <linearGradient id="streamGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#ffe082" stop-opacity="0.8"/>
+                        <stop offset="50%" stop-color="#80deea" stop-opacity="0.6"/>
+                        <stop offset="100%" stop-color="#006064" stop-opacity="0.9"/>
+                    </linearGradient>
+                    <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#fff59d" stop-opacity="0.9"/>
+                        <stop offset="30%" stop-color="#ffe082" stop-opacity="0.5"/>
+                        <stop offset="100%" stop-color="#ffe082" stop-opacity="0"/>
+                    </radialGradient>
+                </defs>
+
+                <!-- Sky Base -->
+                <rect width="1920" height="1080" fill="url(#skyGrad)"/>
+
+                <!-- Celestial Sun / Buddha Light -->
+                <circle cx="960" cy="300" r="350" fill="url(#sunGlow)"/>
+
+                <!-- Giant Seated Buddha Silhouette in Background -->
+                <path d="M 800 500 Q 960 220 1120 500 Q 1180 580 1200 680 Q 960 720 720 680 Q 740 580 800 500 Z" fill="#1f140c" opacity="0.65"/>
+                <!-- Buddha Head & Ushnisha -->
+                <circle cx="960" cy="290" r="65" fill="#24170e" opacity="0.85"/>
+                <circle cx="960" cy="215" r="20" fill="#24170e" opacity="0.85"/>
+
+                <!-- Far Mountain Range (Background) -->
+                <path d="M 0 650 L 300 380 L 600 580 L 960 320 L 1320 560 L 1650 350 L 1920 620 L 1920 1080 L 0 1080 Z" fill="url(#mountainGrad2)" opacity="0.75"/>
+
+                <!-- Mid-ground Peaks & Temples -->
+                <path d="M -50 800 L 250 450 L 550 780 L 800 600 L 1150 820 L 1500 480 L 1970 850 L 1970 1080 L -50 1080 Z" fill="url(#mountainGrad1)"/>
+
+                <!-- Suối Thanh Lọc (Stream & Waterfall Curve) -->
+                <path d="M 960 620 Q 940 700 970 760 T 910 880 T 800 960 T 500 1080 L 1100 1080 Q 1150 960 1080 880 T 1030 760 Z" fill="url(#streamGrad)"/>
+
+                <!-- Foreground Mountain Rock Base Left & Right -->
+                <path d="M 0 850 Q 300 780 450 1080 L 0 1080 Z" fill="#0d0804"/>
+                <path d="M 1450 1080 Q 1600 750 1920 820 L 1920 1080 Z" fill="#0d0804"/>
+            </svg>
+        </div>
+
+        <!-- Atmospheric Mist Layer -->
+        <div class="mist-layer absolute inset-0 pointer-events-none"></div>
+
+        <!-- Top Navigation Bar & Stats Header -->
+        <header class="absolute top-0 left-0 right-0 p-4 sm:p-6 flex justify-between items-center z-20 bg-gradient-to-b from-black/80 via-black/40 to-transparent">
+            <!-- Title & Spiritual Branding -->
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-full bg-amber-900/80 border border-gold-500 flex items-center justify-center text-gold-400 shadow-lg">
+                    <i class="fa-solid fa-om text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-cinzel font-bold text-lg sm:text-2xl gold-text-glow tracking-widest">THIỀN NIỆM</h1>
+                    <p class="text-xs text-amber-200/70 font-charm hidden sm:block">Tịnh Hóa Thân Tâm • Tích Tạo Công Đức</p>
+                </div>
+            </div>
+
+            <!-- Merit Counter & Action Icons -->
+            <div class="flex items-center space-x-3">
+                <!-- Công Đức Counter -->
+                <div class="bg-amber-950/80 border border-gold-600/50 rounded-full px-4 py-1.5 flex items-center space-x-2 shadow-md backdrop-blur-md">
+                    <i class="fa-solid fa-hand-holding-heart text-gold-400"></i>
+                    <span class="text-xs text-amber-300">Công Đức:</span>
+                    <span id="merit-count" class="font-bold font-cinzel text-gold-300 text-sm sm:text-base">0</span>
+                </div>
+
+                <!-- Vườn Cây Button -->
+                <button onclick="openGardenModal()" class="bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-500/60 rounded-full p-2.5 sm:px-4 sm:py-1.5 text-emerald-300 flex items-center space-x-2 transition-all shadow-md backdrop-blur-md">
+                    <i class="fa-solid fa-seedling text-emerald-400"></i>
+                    <span class="text-xs font-semibold hidden sm:inline">Vườn Cây</span>
+                </button>
+
+                <!-- Admin Settings Button -->
+                <button onclick="openAdminModal()" class="bg-amber-900/60 hover:bg-amber-800 border border-gold-600/40 rounded-full p-2.5 text-gold-400 transition-all shadow-md backdrop-blur-md" title="Cấu hình Admin">
+                    <i class="fa-solid fa-gear"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- DYNAMIC BIA ĐÁ (STONE STELES) CONTAINER -->
+        <div id="steles-container" class="absolute inset-0 w-full h-full z-10 pointer-events-none">
+            <!-- Buttons rendered programmatically via JS based on relative % coordinates -->
+        </div>
+
+        <!-- CENTRAL MÕ 4D (INTERACTIVE MOKUGYO) -->
+        <div class="absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center">
+            <!-- Ripple Effect Base Container -->
+            <div class="relative flex items-center justify-center">
+                <div id="ripple-target" class="absolute inset-0 rounded-full pointer-events-none"></div>
+
+                <!-- Floating Merit Text Spawn Area -->
+                <div id="floating-text-container" class="absolute -top-16 left-1/2 -translate-x-1/2 pointer-events-none w-48 text-center"></div>
+
+                <!-- 4D Mokugyo Wooden Fish Button -->
+                <button id="mokugyo-btn" onclick="tapMokugyo(event)" class="relative w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-gradient-to-b from-amber-800 via-amber-900 to-amber-950 border-4 border-gold-500/80 shadow-2xl flex flex-col items-center justify-center group active:scale-95 transition-transform duration-100 cursor-pointer overflow-hidden">
+                    <!-- Subtle Glow Inner -->
+                    <div class="absolute inset-0 bg-gold-400/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    
+                    <!-- Mokugyo Icon (SVG/FontAwesome) -->
+                    <i class="fa-solid fa-drum text-3xl sm:text-4xl text-gold-300 drop-shadow-md group-hover:scale-110 transition-transform"></i>
+                    <span class="mt-1 text-[10px] sm:text-xs font-charm font-bold text-gold-200 tracking-wider">GÕ MÕ</span>
+
+                    <!-- Wooden Texture lines -->
+                    <div class="absolute inset-0 border-2 border-amber-950/40 rounded-full pointer-events-none"></div>
+                </button>
+            </div>
+            
+            <p class="mt-2 text-xs text-gold-300/80 font-charm tracking-widest text-center bg-black/50 px-3 py-1 rounded-full backdrop-blur-sm">
+                Chạm để Niệm Phật • Tích Tụ Duyên An
+            </p>
+        </div>
+
+        <!-- FOOTER BRANDING / USER UUID -->
+        <footer class="absolute bottom-2 left-4 z-10 text-[10px] text-amber-200/40 font-mono hidden sm:block">
+            Mã Tâm Linh: <span id="user-uuid-display">...</span>
+        </footer>
+    </div>
+
+    <!-- MODAL 1: MOUNTAIN / STREAM DETAILS (BIA ĐÁ DETAIL) -->
+    <div id="stele-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="glass-modal max-w-lg w-full rounded-2xl p-6 sm:p-8 relative border border-gold-500/40 text-amber-100 transform scale-95 transition-transform duration-300" id="stele-modal-card">
+            <!-- Close Button -->
+            <button onclick="closeSteleModal()" class="absolute top-4 right-4 text-amber-400 hover:text-gold-300 w-8 h-8 rounded-full bg-black/40 flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <!-- Header Icon & Title -->
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-gradient-to-b from-amber-800 to-amber-950 border-2 border-gold-400 flex items-center justify-center text-gold-300 text-2xl shadow-lg">
+                    <i id="modal-icon" class="fa-solid fa-mountain"></i>
+                </div>
+                <h2 id="modal-title" class="font-cinzel text-2xl sm:text-3xl font-bold gold-text-glow">Núi Từ Bi</h2>
+                <div class="w-24 h-0.5 bg-gradient-to-r from-transparent via-gold-500 to-transparent mx-auto mt-2"></div>
+            </div>
+
+            <!-- Description Body -->
+            <div class="space-y-4 mb-6 text-sm sm:text-base leading-relaxed text-amber-200/90 max-h-60 overflow-y-auto pr-2">
+                <p id="modal-description" class="text-justify font-sans">
+                    Nơi dung chứa lòng từ bi bao la, hóa giải mọi ưu phiền.
+                </p>
+                <div class="p-3 bg-amber-950/60 border-l-2 border-gold-500 rounded text-xs italic text-amber-300/80" id="modal-quote">
+                    "Từ năng ban vui, Bi năng cứu khổ."
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row gap-3">
+                <button onclick="enterSpecialPractice()" class="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-amber-700 via-gold-600 to-amber-800 hover:from-amber-600 hover:to-gold-500 text-amber-950 font-bold font-cinzel text-sm sm:text-base shadow-lg transition-all flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-om"></i>
+                    <span>VÀO PHÒNG CHUYÊN TU</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: VƯỜN CÂY TỊNH TÂM (MINDFUL GARDEN) -->
+    <div id="garden-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="glass-modal max-w-md w-full rounded-2xl p-6 relative border border-emerald-500/40 text-amber-100 text-center">
+            <!-- Close Button -->
+            <button onclick="closeGardenModal()" class="absolute top-4 right-4 text-emerald-400 hover:text-emerald-200 w-8 h-8 rounded-full bg-black/40 flex items-center justify-center">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <h2 class="font-cinzel text-2xl font-bold text-emerald-400 mb-1">VƯỜN CÂY TỊNH TÂM</h2>
+            <p class="text-xs text-amber-200/70 mb-4 font-charm">Tưới Nước Từ Bi • Nuôi Dữ liệu Mầm An</p>
+
+            <!-- Tree Visual Stage Canvas / SVG -->
+            <div class="relative w-48 h-48 mx-auto my-4 bg-gradient-to-b from-emerald-950/40 to-black/60 rounded-full border-2 border-emerald-500/30 flex items-center justify-center overflow-hidden shadow-inner">
+                <!-- Dynamic Tree Stage Graphic -->
+                <div id="tree-graphic" class="transition-transform duration-500 transform">
+                    <!-- Updated dynamically via JS -->
+                </div>
+            </div>
+
+            <!-- Tree Stats & Info -->
+            <div class="space-y-2 mb-5">
+                <div id="tree-stage-title" class="font-bold text-emerald-300 font-cinzel text-lg">Cấp 1: Mầm Cây An Lạc</div>
+                <div class="text-xs text-amber-200/80">Số giọt nước hiện có: <span id="water-drops-count" class="font-bold text-cyan-300">0</span> 💧</div>
+                
+                <!-- Progress Bar -->
+                <div class="w-full bg-amber-950/80 rounded-full h-3 border border-emerald-500/30 overflow-hidden mt-2">
+                    <div id="tree-progress-bar" class="bg-gradient-to-r from-emerald-500 to-cyan-400 h-full w-0 transition-all duration-500"></div>
+                </div>
+                <div class="text-[10px] text-amber-300/60 mt-1" id="tree-progress-text">0 / 50 giọt nước để phát triển</div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex gap-3">
+                <button onclick="buyWaterDrop()" class="flex-1 py-2.5 px-3 rounded-xl bg-amber-900/80 hover:bg-amber-800 border border-gold-500/40 text-gold-300 text-xs font-semibold transition-all">
+                    Đổi 20 Công Đức = 1 💧
+                </button>
+                <button onclick="waterTree()" class="flex-1 py-2.5 px-3 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-bold transition-all shadow-lg flex items-center justify-center space-x-1">
+                    <i class="fa-solid fa-droplet text-cyan-300"></i>
+                    <span>TƯỚI CÂY</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: NO-CODE ADMIN PANEL -->
+    <div id="admin-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="glass-modal max-w-2xl w-full rounded-2xl p-6 relative border border-gold-500/40 text-amber-100 max-h-[90vh] flex flex-col">
+            <!-- Header -->
+            <div class="flex justify-between items-center pb-4 border-b border-gold-500/30">
+                <h3 class="font-cinzel text-xl font-bold text-gold-300"><i class="fa-solid fa-sliders mr-2"></i>Quản Trị Tọa Độ & Tên Địa Danh</h3>
+                <button onclick="closeAdminModal()" class="text-amber-400 hover:text-gold-200">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Config Form List (Scrollable) -->
+            <div class="flex-1 overflow-y-auto py-4 space-y-4 pr-2 text-xs sm:text-sm">
+                <div class="p-3 bg-amber-950/60 rounded-lg border border-gold-500/20">
+                    <h4 class="font-bold text-gold-400 mb-2">Hình Nền Giao Diện Custom (URL)</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-amber-300/80 text-[11px] mb-1">Ảnh Máy Tính (PC - Khung Ngang):</label>
+                            <input type="text" id="cfg-bg-pc" class="w-full bg-black/60 border border-amber-700/60 rounded px-2 py-1.5 text-xs text-amber-100" placeholder="https://example.com/pc-bg.jpg">
+                        </div>
+                        <div>
+                            <label class="block text-amber-300/80 text-[11px] mb-1">Ảnh Điện Thoại (Mobile - Khung Dọc):</label>
+                            <input type="text" id="cfg-bg-mobile" class="w-full bg-black/60 border border-amber-700/60 rounded px-2 py-1.5 text-xs text-amber-100" placeholder="https://example.com/mobile-bg.jpg">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Locations List Editor -->
+                <div class="space-y-3" id="admin-locations-list">
+                    <!-- Generated via JS -->
+                </div>
+            </div>
+
+            <!-- Footer Save Actions -->
+            <div class="pt-4 border-t border-gold-500/30 flex justify-end space-x-3">
+                <button onclick="resetAdminDefaults()" class="px-4 py-2 rounded-lg bg-red-950/80 hover:bg-red-900 border border-red-500/40 text-red-300 text-xs">
+                    Khôi Phục Mặc Định
+                </button>
+                <button onclick="saveAdminSettings()" class="px-5 py-2 rounded-lg bg-gold-600 hover:bg-gold-500 text-amber-950 font-bold text-xs shadow-lg">
+                    Lưu Cấu Hình
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        /* ==========================================================================
+           4. RENDER BIA ĐÁ (STONE STELES WITH GOLDEN TEXT) - VERTICAL NO-BOX
+           ========================================================================== */
+        function renderSteles() {
+            const container = document.getElementById('steles-container');
+            container.innerHTML = '';
+
+            const isMobile = window.innerWidth < 768;
+
+            state.locations.forEach(loc => {
+                const coords = isMobile ? loc.mobile : loc.pc;
+
+                const btn = document.createElement('button');
+                btn.className = 'stele-btn absolute pointer-events-auto flex flex-col items-center group cursor-pointer text-center';
+                btn.style.left = `${coords.x}%`;
+                btn.style.top = `${coords.y}%`;
+                btn.style.transform = 'translate(-50%, -50%)';
+
+                btn.onclick = () => openSteleModal(loc.id);
+
+                // Split name into prefix (NÚI/SUỐI/CỔNG) and main title
+                let prefix = 'NÚI';
+                let mainTitle = loc.name;
+
+                if (loc.name.startsWith('Suối ')) {
+                    prefix = 'SUỐI';
+                    mainTitle = loc.name.replace('Suối ', '');
+                } else if (loc.name.startsWith('Núi ')) {
+                    prefix = 'NÚI';
+                    mainTitle = loc.name.replace('Núi ', '');
+                } else if (loc.name.startsWith('Chùa ') || loc.name.startsWith('Cổng ')) {
+                    prefix = 'CỔNG';
+                    mainTitle = loc.name.replace(/^(Chùa|Cổng)\s+/, '');
+                }
+
+                btn.innerHTML = `
+                    <!-- Row 1: Soft Spiritual Icon -->
+                    <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-amber-950/70 border border-gold-400/80 flex items-center justify-center text-gold-300 text-sm sm:text-base mb-1 shadow-lg group-hover:scale-110 group-hover:border-gold-300 transition-all">
+                        <i class="fa-solid ${loc.icon}"></i>
+                    </div>
+
+                    <!-- Row 2: Prefix (NÚI / SUỐI / CỔNG) -->
+                    <span class="font-cinzel text-[10px] sm:text-xs font-semibold tracking-widest text-amber-200/90 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] leading-none uppercase mb-0.5">
+                        ${prefix}
+                    </span>
+
+                    <!-- Row 3+: Main Name in Vertical Gold Text -->
+                    <span class="font-cinzel font-black text-sm sm:text-base gold-text-glow tracking-wider leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,1)] uppercase">
+                        ${mainTitle}
+                    </span>
+                `;
+
+                container.appendChild(btn);
+            });
+        }
+
+        /* ==========================================================================
+           5. MOKUGYO (MÕ 4D) TAP & MERIT SYSTEM
+           ========================================================================== */
+        function tapMokugyo(event) {
+            // Sound Effect
+            playMokugyoSound();
+
+            // Increment Merit
+            state.merit += 1;
+            updateUI();
+            saveUserData();
+
+            // Trigger Ripple Visual
+            const rippleTarget = document.getElementById('ripple-target');
+            const ripple = document.createElement('div');
+            ripple.className = 'absolute inset-0 rounded-full border-2 border-gold-400 animate-ripple pointer-events-none';
+            rippleTarget.appendChild(ripple);
+
+            setTimeout(() => {
+                ripple.remove();
+            }, 700);
+
+            // Trigger Floating "+1 Công Đức"
+            const container = document.getElementById('floating-text-container');
+            const floatText = document.createElement('div');
+            floatText.className = 'float-merit font-cinzel font-bold text-sm sm:text-base text-gold-300 drop-shadow-md';
+            floatText.innerText = '+1 Công Đức';
+            
+            // Random slight offset X
+            const offsetX = (Math.random() - 0.5) * 40;
+            floatText.style.transform = `translateX(${offsetX}px)`;
+
+            container.appendChild(floatText);
+
+            setTimeout(() => {
+                floatText.remove();
+            }, 1200);
+        }
+
+        /* ==========================================================================
+           6. MODAL HANDLERS (STELE DETAILS & SPECIAL PRACTICE)
+           ========================================================================== */
+        let activeLocationId = null;
+
+        function openSteleModal(id) {
+            const loc = state.locations.find(l => l.id === id);
+            if (!loc) return;
+
+            activeLocationId = id;
+            document.getElementById('modal-title').innerText = loc.name;
+            document.getElementById('modal-description').innerText = loc.description;
+            document.getElementById('modal-quote').innerText = loc.quote;
+
+            const modalIcon = document.getElementById('modal-icon');
+            modalIcon.className = `fa-solid ${loc.icon}`;
+
+            const modal = document.getElementById('stele-modal');
+            const card = document.getElementById('stele-modal-card');
+
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            card.classList.remove('scale-95');
+            card.classList.add('scale-100');
+        }
+
+        function closeSteleModal() {
+            const modal = document.getElementById('stele-modal');
+            const card = document.getElementById('stele-modal-card');
+
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            card.classList.remove('scale-100');
+            card.classList.add('scale-95');
+        }
+
+        function enterSpecialPractice() {
+            closeSteleModal();
+            // Tap 5 times merit bonus upon entering practice room
+            state.merit += 5;
+            updateUI();
+            saveUserData();
+
+            const loc = state.locations.find(l => l.id === activeLocationId);
+            const name = loc ? loc.name : 'Không Gian Chuyên Tu';
+
+            // Show friendly non-alert notification modal
+            showToast(`Bạn đã bước vào không gian chuyên tu: ${name}. (+5 Công Đức)`);
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-amber-950/95 border border-gold-500 text-gold-300 font-cinzel px-6 py-3 rounded-full shadow-2xl text-xs sm:text-sm text-center backdrop-blur-md transition-all duration-300 transform -translate-y-4 opacity-0';
+            toast.innerText = message;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('-translate-y-4', 'opacity-0');
+            }, 50);
+
+            setTimeout(() => {
+                toast.classList.add('-translate-y-4', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        /* ==========================================================================
+           7. VƯỜN CÂY TỊNH TÂM (MINDFUL GARDEN SYSTEM)
+           ========================================================================== */
+        const STAGE_REQUIREMENTS = [0, 20, 50, 100, 200]; // Drops needed per stage level
+        const STAGE_NAMES = [
+            'Cấp 1: Mầm Cây An Lạc',
+            'Cấp 2: Nhánh Cây Tự Tại',
+            'Cấp 3: Cây Xanh Từ Bi',
+            'Cấp 4: Tán Cây Hóa Giải',
+            'Cấp 5: Cổ Thụ Tịnh Độ (Trí Tuệ Tròn Đầy)'
+        ];
+
+        function openGardenModal() {
+            updateGardenModalUI();
+            const modal = document.getElementById('garden-modal');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+        }
+
+        function closeGardenModal() {
+            const modal = document.getElementById('garden-modal');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        function buyWaterDrop() {
+            if (state.merit < 20) {
+                showToast('Bạn cần ít nhất 20 Công Đức để đổi 1 Giọt Nước Từ Bi!');
+                return;
+            }
+            state.merit -= 20;
+            state.waterDrops += 1;
+            updateUI();
+            saveUserData();
+            updateGardenModalUI();
+            showToast('Đã đổi thành công 1 Giọt Nước Từ Bi! 💧');
+        }
+
+        function waterTree() {
+            if (state.waterDrops < 1) {
+                showToast('Bạn chưa có Giọt Nước Từ Bi nào. Hãy tích Công Đức để đổi!');
+                return;
+            }
+
+            if (state.treeStage >= 5) {
+                showToast('Cây Tịnh Tâm đã đạt cấp Cổ Thụ tối cao! Tích lũy phước báu vô lượng.');
+                return;
+            }
+
+            state.waterDrops -= 1;
+            state.treeProgress += 1;
+
+            const needed = STAGE_REQUIREMENTS[state.treeStage];
+            if (state.treeProgress >= needed) {
+                state.treeStage += 1;
+                state.treeProgress = 0;
+                showToast(`Chúc mừng! Cây Tịnh Tâm đã phát triển lên ${STAGE_NAMES[state.treeStage - 1]} 🌿`);
+            } else {
+                showToast('Đã tưới 1 giọt nước mát cho Cây Tịnh Tâm! 💧');
+            }
+
+            updateUI();
+            saveUserData();
+            updateGardenModalUI();
+        }
+
+        function updateGardenModalUI() {
+            document.getElementById('tree-stage-title').innerText = STAGE_NAMES[state.treeStage - 1];
+
+            const currentNeeded = STAGE_REQUIREMENTS[state.treeStage] || 200;
+            const pct = state.treeStage >= 5 ? 100 : Math.min(100, Math.floor((state.treeProgress / currentNeeded) * 100));
+
+            document.getElementById('tree-progress-bar').style.width = `${pct}%`;
+            document.getElementById('tree-progress-text').innerText = state.treeStage >= 5 ? 'Đã đạt cấp độ viên mãn' : `${state.treeProgress} / ${currentNeeded} giọt nước`;
+        }
+
+        function renderTreeGraphic() {
+            const container = document.getElementById('tree-graphic');
+            const stage = state.treeStage;
+
+            // Render SVG based on growth stage
+            let svgContent = '';
+            if (stage === 1) {
+                // Sprout
+                svgContent = `
+                    <svg width="80" height="90" viewBox="0 0 100 100">
+                        <path d="M50 90 L50 60" stroke="#8d6e63" stroke-width="6" stroke-linecap="round"/>
+                        <path d="M50 65 Q 30 45 25 55 Q 35 70 50 65" fill="#66bb6a"/>
+                        <path d="M50 60 Q 70 40 75 50 Q 65 65 50 60" fill="#4caf50"/>
+                    </svg>`;
+            } else if (stage === 2) {
+                // Young Sapling
+                svgContent = `
+                    <svg width="100" height="110" viewBox="0 0 100 100">
+                        <path d="M50 90 L50 40 Q 50 20 65 15" stroke="#6d4c41" stroke-width="8" stroke-linecap="round"/>
+                        <circle cx="65" cy="15" r="18" fill="#81c784"/>
+                        <circle cx="35" cy="35" r="15" fill="#4caf50"/>
+                        <circle cx="50" cy="25" r="20" fill="#388e3c"/>
+                    </svg>`;
+            } else if (stage === 3) {
+                // Green Tree
+                svgContent = `
+                    <svg width="120" height="130" viewBox="0 0 100 100">
+                        <path d="M50 95 L50 40 M50 60 L30 45 M50 50 L70 35" stroke="#5d4037" stroke-width="10" stroke-linecap="round"/>
+                        <circle cx="50" cy="30" r="30" fill="#4caf50"/>
+                        <circle cx="30" cy="40" r="22" fill="#388e3c"/>
+                        <circle cx="70" cy="38" r="22" fill="#66bb6a"/>
+                    </svg>`;
+            } else if (stage === 4) {
+                // Large Canopy Tree
+                svgContent = `
+                    <svg width="140" height="150" viewBox="0 0 100 100">
+                        <path d="M50 95 Q 48 60 50 35 M50 65 L25 50 M50 55 L75 45" stroke="#4e342e" stroke-width="12" stroke-linecap="round"/>
+                        <circle cx="50" cy="25" r="35" fill="#2e7d32"/>
+                        <circle cx="22" cy="42" r="25" fill="#388e3c"/>
+                        <circle cx="78" cy="40" r="25" fill="#4caf50"/>
+                        <circle cx="50" cy="45" r="20" fill="#a5d6a7" opacity="0.4"/>
+                    </svg>`;
+            } else {
+                // Ancient Sacred Bodhi Tree
+                svgContent = `
+                    <svg width="160" height="160" viewBox="0 0 100 100">
+                        <path d="M50 95 Q 40 55 50 30 M50 70 L15 45 M50 60 L85 40 M50 45 L30 25" stroke="#3e2723" stroke-width="14" stroke-linecap="round"/>
+                        <circle cx="50" cy="22" r="38" fill="#1b5e20"/>
+                        <circle cx="18" cy="38" r="28" fill="#2e7d32"/>
+                        <circle cx="82" cy="35" r="28" fill="#388e3c"/>
+                        <circle cx="50" cy="18" r="12" fill="#ffe082" opacity="0.8"/>
+                        <!-- Golden Aura Sparks -->
+                        <circle cx="50" cy="50" r="45" fill="none" stroke="#ffd54f" stroke-width="1.5" stroke-dasharray="4 4"/>
+                    </svg>`;
+            }
+            container.innerHTML = svgContent;
+        }
+
+        /* ==========================================================================
+           8. ADMIN NO-CODE CONFIGURATION PANEL
+           ========================================================================== */
+        function openAdminModal() {
+            document.getElementById('cfg-bg-pc').value = state.bgPc;
+            document.getElementById('cfg-bg-mobile').value = state.bgMobile;
+
+            const listContainer = document.getElementById('admin-locations-list');
+            listContainer.innerHTML = '';
+
+            state.locations.forEach((loc, index) => {
+                const item = document.createElement('div');
+                item.className = 'p-3 bg-amber-950/70 rounded-lg border border-gold-600/30 space-y-2';
+
+                item.innerHTML = `
+                    <div class="flex justify-between items-center font-bold text-gold-300">
+                        <span>#${index + 1} ${loc.name}</span>
+                        <span class="text-[10px] text-amber-400/60 font-mono">ID: ${loc.id}</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-[10px] text-amber-200/70">Tên hiển thị:</label>
+                            <input type="text" data-idx="${index}" data-field="name" value="${loc.name}" class="admin-input w-full bg-black/60 border border-amber-800 rounded px-2 py-1 text-xs">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] text-amber-200/70">Biểu tượng (FontAwesome Class):</label>
+                            <input type="text" data-idx="${index}" data-field="icon" value="${loc.icon}" class="admin-input w-full bg-black/60 border border-amber-800 rounded px-2 py-1 text-xs">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                        <div>
+                            <label class="block text-[10px] text-amber-200/70">PC X (%):</label>
+                            <input type="number" data-idx="${index}" data-field="pc.x" value="${loc.pc.x}" class="admin-input w-full bg-black/60 border border-amber-800 rounded px-2 py-1 text-xs">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] text-amber-200/70">PC Y (%):</label>
+                            <input type="number" data-idx="${index}" data-field="pc.y" value="${loc.pc.y}" class="admin-input w-full bg-black/60 border border-amber-800 rounded px-2 py-1 text-xs">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] text-amber-200/70">Mobile X (%):</label>
+                            <input type="number" data-idx="${index}" data-field="mobile.x" value="${loc.mobile.x}" class="admin-input w-full bg-black/60 border border-amber-800 rounded px-2 py-1 text-xs">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] text-amber-200/70">Mobile Y (%):</label>
+                            <input type="number" data-idx="${index}" data-field="mobile.y" value="${loc.mobile.y}" class="admin-input w-full bg-black/60 border border-amber-800 rounded px-2 py-1 text-xs">
+                        </div>
+                    </div>
+                `;
+                listContainer.appendChild(item);
+            });
+
+            const modal = document.getElementById('admin-modal');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+        }
+
+        function closeAdminModal() {
+            const modal = document.getElementById('admin-modal');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        function saveAdminSettings() {
+            state.bgPc = document.getElementById('cfg-bg-pc').value.trim();
+            state.bgMobile = document.getElementById('cfg-bg-mobile').value.trim();
+
+            const inputs = document.querySelectorAll('.admin-input');
+            inputs.forEach(input => {
+                const idx = parseInt(input.getAttribute('data-idx'), 10);
+                const field = input.getAttribute('data-field');
+                const val = input.value;
+
+                if (field === 'name') state.locations[idx].name = val;
+                if (field === 'icon') state.locations[idx].icon = val;
+                if (field === 'pc.x') state.locations[idx].pc.x = parseFloat(val);
+                if (field === 'pc.y') state.locations[idx].pc.y = parseFloat(val);
+                if (field === 'mobile.x') state.locations[idx].mobile.x = parseFloat(val);
+                if (field === 'mobile.y') state.locations[idx].mobile.y = parseFloat(val);
+            });
+
+            saveUserData();
+            renderSteles();
+            applyBackgroundImages();
+            closeAdminModal();
+            showToast('Đã lưu cấu hình vị trí & giao diện thành công!');
+        }
+
+        function resetAdminDefaults() {
+            state.locations = JSON.parse(JSON.stringify(DEFAULT_LOCATIONS));
+            state.bgPc = '';
+            state.bgMobile = '';
+            saveUserData();
+            renderSteles();
+            applyBackgroundImages();
+            closeAdminModal();
+            showToast('Đã khôi phục cài đặt mặc định ban đầu.');
+        }
+    </script>
+</body>
+</html>
